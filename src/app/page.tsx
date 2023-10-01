@@ -1,5 +1,6 @@
 import "@/lib/schedule";
 import { formatUTCDate, getCurrentSchedule } from "@/lib/schedule";
+import Image from "next/image";
 
 export default function Home() {
   const events = getCurrentSchedule();
@@ -8,11 +9,11 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className="mb-5 flex gap-x-5">
         <div className="flex items-center content-center">
-          <img
+          <Image
             src="https://wow.zamimg.com/images/wow/icons/large/trade_archaeology.jpg"
             alt="Achievement icon of papers and magnifying glass"
-            width="56px"
-            height="56px"
+            width="56"
+            height="56"
             className="border-2 border-lime-200 rounded-md"
           />
         </div>
