@@ -20,7 +20,7 @@ export default function Events() {
 
   return (
     <div>
-      <div className="min-h-screen p-20">
+      <div className="min-h-screen p-10 md:p-20">
         <div className="mb-7 flex-row flex-wrap md:flex-nowrap flex gap-x-5 gap-y-5">
           <div className="flex shrink-0 basis-full md:basis-auto justify-center items-center content-center">
             <Image
@@ -31,7 +31,7 @@ export default function Events() {
               className="border-2 border-lime-200 rounded-md"
             />
           </div>
-          <div>
+          <div className="text-center md:text-left">
             <h1 className="text-4xl mb-2">
               <a
                 href="https://www.wowhead.com/achievement=10603/a-keen-eye"
@@ -41,7 +41,7 @@ export default function Events() {
               >
                 A Keen Eye
               </a>{" "}
-              — Achievement Schedule
+              Achievement Schedule
             </h1>
             <p>
               I keep forgetting to check the schedule and rummage through the
