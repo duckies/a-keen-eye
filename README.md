@@ -6,4 +6,4 @@
 
 ## Schedule
 
-<a href="https://duckies.github.com/a-keen-eye" rel="noreferrer">View the Schedule</a>
+<a href="https://duckies.github.io/a-keen-eye" rel="noreferrer">View the Schedule</a>
