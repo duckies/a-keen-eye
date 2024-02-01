@@ -2,11 +2,11 @@ import { format, intervalToDuration } from "date-fns";
 
 const config = {
   name: "Achievement — A Keen Eye",
-  firstStart: "2023-08-23T00:00:00.000Z",
-  firstEnd: "2023-09-05T00:00:00.000Z",
+  seed: "2016-08-31T00:00:00.000Z",
+  event_duration: 14 * 60 * 60 * 24 * 1000,
   rotation: [
     {
-      name: "Crystalline Eye",
+      name: "Crystalline Eye of Undravius",
       link: "https://www.wowhead.com/item=131724/crystalline-eye-of-undravius",
     },
     {
@@ -18,7 +18,7 @@ const config = {
       link: "https://www.wowhead.com/item=131733/spear-of-rethu",
     },
     {
-      name: "Crown Jewels",
+      name: "Crown Jewels of Suramar",
       link: "https://www.wowhead.com/item=131740/crown-jewels-of-suramar",
     },
     {
@@ -50,7 +50,7 @@ const config = {
       link: "https://www.wowhead.com/item=131744/key-to-narthalas-academy",
     },
     {
-      name: "Purple Hills",
+      name: "Purple Hills of Eredath",
       link: "https://www.wowhead.com/item=131732/purple-hills-of-eredath",
     },
     {
@@ -60,35 +60,31 @@ const config = {
   ],
 };
 
-const DAY_IN_MS = 1000 * 60 * 60 * 24;
-
-export function getCurrentSchedule() {
-  let start = new Date(config.firstStart);
-  let end = new Date(config.firstEnd);
-
-  const duration = end.getTime() - start.getTime();
+export function getSchedule() {
   const now = new Date();
+  const seed = new Date(2016, 7, 31);
+  const num_events = config.rotation.length;
+
+  const events_completed = Math.floor(
+    (now.getTime() - seed.getTime()) / config.event_duration
+  );
+  const current_event_index = events_completed % num_events;
+  const current_event_date = new Date(
+    seed.getTime() + events_completed * config.event_duration
+  );
+
   const events = [];
-  let currentEvent: null | number = null;
 
-  for (let i = 0; events.length < config.rotation.length; i++) {
-    // It's active, or in the future.
-    if (now.getTime() < end.getTime()) {
-      if (currentEvent === null) {
-        currentEvent = i;
-      }
+  for (let i = 0; i < num_events; i++) {
+    const event_index = (current_event_index + i) % num_events;
+    const metadata = config.rotation[event_index];
 
-      events.push({
-        order: (i % config.rotation.length) + 1,
-        name: config.rotation[i % config.rotation.length].name,
-        link: config.rotation[i % config.rotation.length].link,
-        start: new Date(start.getTime()),
-        end: new Date(end.getTime()),
-      });
-    }
-
-    start = new Date(end.getTime() + DAY_IN_MS);
-    end = new Date(start.getTime() + duration);
+    events.push({
+      step: event_index + 1,
+      date: new Date(current_event_date.getTime() + i * config.event_duration),
+      name: metadata.name,
+      link: metadata.link,
+    });
   }
 
   return events;
@@ -105,5 +101,5 @@ export function formatUTCDate(date: Date = new Date()) {
     date.getUTCSeconds()
   );
 
-  return format(utc, "MMM do yyyy");
+  return format(utc, "MMMM do, yyyy");
 }

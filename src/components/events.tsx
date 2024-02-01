@@ -1,6 +1,6 @@
 "use client";
 
-import { formatUTCDate, getCurrentSchedule } from "@/lib/schedule";
+import { formatUTCDate, getSchedule } from "@/lib/schedule";
 import { type Variants, motion } from "framer-motion";
 import Image from "next/image";
 
@@ -16,7 +16,7 @@ const container = {
 };
 
 export default function Events() {
-  const events = getCurrentSchedule();
+  const events = getSchedule();
 
   return (
     <div>
@@ -60,11 +60,11 @@ export default function Events() {
             <motion.div
               variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
               className="flex-grow"
-              key={event.start.getTime()}
+              key={event.step}
             >
               <div className="flex gap-x-3 rounded-lg w-full border-2 border-lime-200/20 bg-neutral-900 px-5 py-4">
                 <div>
-                  <span className="text-4xl text-lime-200">{event.order}</span>
+                  <span className="text-4xl text-lime-200">{event.step}</span>
                 </div>
                 <div>
                   <a
@@ -77,7 +77,7 @@ export default function Events() {
                     {i === 0 && " (Active)"}
                   </a>
                   <p>
-                    {formatUTCDate(event.start)} - {formatUTCDate(event.end)}
+                    {formatUTCDate(event.date)}
                   </p>
                 </div>
               </div>
